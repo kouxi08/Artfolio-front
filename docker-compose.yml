@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  react-app:
+    build: .
+    volumes:
+      - .:/app
+    command: npm start
+    ports:
+      - "3000:3000"
