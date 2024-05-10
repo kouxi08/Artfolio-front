@@ -8,3 +8,25 @@ services:
     command: npm start
     ports:
       - "3000:3000"
+    tty: true
+  xxx-minio:
+    container_name: xxx-minio-container
+    image: minio/minio:RELEASE.2023-11-11T08-14-41Z # 任意のバージョンを指定。latestより特定バージョンの指定が推奨される。
+    volumes:
+        - "./minio/data:/data/minio/data" # 任意の設定
+    ports:
+        - 9090:9090
+    environment:
+        MINIO_ROOT_USER: "minio_root"
+        MINIO_ROOT_PASSWORD: "minio_password"
+    command: server --console-address ":9090" /data/minio/data
+  golang:
+    image: golang:latest
+    ports:
+      - 8880:80
+    volumes:
+      - type: bind
+        source: "./go"
+        target: "/go/src/app"
+    tty: true
+    restart: always

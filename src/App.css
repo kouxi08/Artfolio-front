@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.preview-image {
+  max-width: 150px;
+  margin: 5px;
+}
+
+.remove-image {
+  display: block;
+  margin-top: 5px;
+  cursor: pointer;
+  color: red;
+}
