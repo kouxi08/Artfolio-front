@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import './App.css';
-import { S3,CreateBucketCommand } from "@aws-sdk/client-s3";
 import { formsend, splitLastDot,uploadFile } from './logic/access';
 
 function App() {
@@ -76,16 +75,32 @@ function App() {
     const response = await formsend(url,'post',body)
     console.log(response.bkname)
 
-    if(profilePhoto){
-      if(worksPhotos.length > 0){
-        const [filename,extension] = splitLastDot(profilePhoto.name)
-        const key = "profile-" + filename + "-" + Math.random().toString(36).substring(2, 6 + 2) + "." + extension
-        uploadFile(profilePhoto,key,response.bkname)
+    if (profilePhoto) {
+    if (worksPhotos.length > 0) {
+        const [filename, extension] = splitLastDot(profilePhoto.name);
+        const key = "profile-" + filename + "-" + Math.random().toString(36).substring(2, 6 + 2) + "." + extension;
+        const bucketName = "aaa"; // バケット名を変数にしました
+
+        try {
+            const result = await uploadFile(profilePhoto, key, bucketName);
+            if (result) {
+                console.log("Profile photo uploaded successfully.");
+                // 必要に応じて追加の処理をここに記述
+            } else {
+                console.error("Failed to upload profile photo.");
+                // エラーメッセージをユーザーに通知する処理を追加
+            }
+        } catch (error) {
+            console.error("An error occurred during the upload process:", error);
+            // エラーメッセージをユーザーに通知する処理を追加
+        }
+
         for (const photo of worksPhotos) {
           const [filename,extension]  = splitLastDot(photo.name)
           const key = "works-" + filename + "-" + Math.random().toString(36).substring(2, 6 + 2) + "." + extension
           await uploadFile(photo,key,response.bkname);
         }
+
       }else{
         alert("作品の写真が選択されていません。")
         return
@@ -94,6 +109,8 @@ function App() {
       alert("プロフィール写真が選択されていません。")
       return
     }
+
+
     alert("成功！！！！！！！")
   };
 

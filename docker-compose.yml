@@ -8,5 +8,5 @@ services:
     command:
         ash -c "npm install && npm start"
     ports:
-      - "3000:3000"
+      - "3000:3300"
     tty: true
