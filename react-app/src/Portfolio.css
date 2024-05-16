@@ -1,0 +1,65 @@
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.port-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.port {
+    font-size: 1.2rem;
+}
+
+img {
+    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Responsive column classes */
+.columns-2 {
+    column-count: 2;
+}
+
+@media (min-width: 768px) {
+    .md-columns-3 {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lg-columns-4 {
+        column-count: 4;
+    }
+}
+
+@media (min-width: 1280px) {
+    .xl-columns-5 {
+        column-count: 5;
+    }
+}
+
+@media (min-width: 640px) {
+    .sm-mr-4 {
+        margin-right: 1rem;
+    }
+
+    .sm-ml-4 {
+        margin-left: 1rem;
+    }
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    break-inside: avoid;
+}

@@ -1,10 +1,9 @@
 version: "3.8"
-
 services:
   react-app:
     build: .
     volumes:
-      - ./react-appaws-sdk/client-s3:/usr/src/app
+      - ./react-app:/usr/src/app
     # command: npm install && npm start
     ports:
       - "3000:3000"
@@ -33,13 +32,13 @@ services:
     restart: always
     environment:
       BUCKET_NAME: "arp"
-  minio_createbuckets:
-    image:  minio/mc:RELEASE.2023-11-11T08-14-41Z
-    depends_on:
-        - minio
-    entrypoint: >
-        /bin/sh -c "
-        mc alias set minioio https://minio:9000 minioadmin minioadmin;
-        mc mb --ignore-existing minioio/test;
-        mc anonymous set public minioio/test;
-        exit 0;"
+  # minio_createbuckets:
+  #   image:  minio/mc:RELEASE.2023-11-11T08-14-41Z
+  #   depends_on:
+  #       - minio
+  #   entrypoint: >
+  #       /bin/sh -c "
+  #       mc alias set minioio https://minio:9000 minioadmin minioadmin;
+  #       mc mb --ignore-existing minioio/test;
+  #       mc anonymous set public minioio/test;
+  #       exit 0;"

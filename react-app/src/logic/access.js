@@ -1,4 +1,4 @@
-import { S3,CreateBucketCommand } from "@aws-sdk/client-s3";
+import { S3,CreateBucketCommand,ListObjectsV2Command } from "@aws-sdk/client-s3";
 
 const s3 = new S3({
     region: 'ap-northeast-1',
@@ -18,7 +18,6 @@ export function splitLastDot(filename) {
     const name = parts.join('.');
     return [name, extension];
 }
-
 
 export async function uploadFile (file,filename,bucketname) {
     const params = {
@@ -44,5 +43,15 @@ export async function formsend(url,method,body){
         return null;
     }
     return data
+}
 
+export async function getFiles(bucketname) {
+    const  { Contents, IsTruncated, NextContinuationToken } = await s3.send(
+        new ListObjectsV2Command({
+          Bucket: bucketname,
+          MaxKeys: 1000, //取得件数を指定。最大1000件まで
+        })
+   );
+   console.log(Contents)
+   return {Contents, IsTruncated, NextContinuationToken}
 }
